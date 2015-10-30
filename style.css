@@ -2,6 +2,8 @@
   border: 1px solid black;
   height: 10vw;
   width: 79vw;
+  text-align: right;
+  font-size: 9vw;
 }
 
 .box {
@@ -9,6 +11,9 @@
   height: 19vw;
   width: 19vw;
   display: inline-block;
+  text-align: center;
+  font-size: 9vw;
+  padding-top: 7vw;
 }
 
 .big {
