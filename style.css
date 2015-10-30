@@ -1,0 +1,19 @@
+#output {
+  border: 1px solid black;
+  height: 30vw;
+  width: 90vw;
+}
+
+.box {
+  border: 1px solid black;
+  height: 19vw;
+  width: 19vw;
+  display: inline-block;
+}
+
+.bigBox {
+  border: 1px solid black;
+  height: 19vw;
+  width: 39vw;
+  display: inline-block;
+}
