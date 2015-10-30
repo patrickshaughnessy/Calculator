@@ -26,7 +26,7 @@
       let input = event.target.innerHTML;
       console.log(typeof input);
       //numbers controller
-      if ('0' || parseInt(input)){
+      if (('0' || parseInt(input)) && !isNaN(input)){
         // bug here: variables get reset even if continuing to operate
         // also problems with 0
         if (equalsPressed){
@@ -70,9 +70,11 @@
 
       // equals key controller
       if (input === "="){
+
         if (checkOperands()){
           //repeat last operation
           console.log('here');
+          return;
         } else {
 
           var operatorIndex = operands.indexOf(true);;
@@ -104,7 +106,7 @@
       }
 
       if (checkOperands()){
-
+        console.log(operands);
         switch(input){
           case '+':
             operands[0] = true;
@@ -127,9 +129,8 @@
             firstNum = result;
             break;
         }
-
-
-
+      } else {
+        console.log(operands);
       }
 
       // decimal point controller
@@ -139,11 +140,17 @@
       }
 
       if (input === '+/-'){
-        result = $output.text() * -1;
-        if (firstNum){
-          firstNum *= -1;
+        if ($output.text() === "0"){
+          console.log($output.text())
+          return;
         } else {
-          secondNum *= -1;
+          result = $output.text() * -1;
+          if (firstNum){
+            firstNum *= -1;
+          } else {
+            secondNum *= -1;
+          }
+
         }
       }
 
@@ -156,6 +163,7 @@
         result = 0;
         firstNum = undefined;
         secondNum = undefined;
+        operands = [false, false, false, false];
       }
 
 
