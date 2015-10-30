@@ -3,11 +3,12 @@
 
   let documentReady = () => {
 
-    let $output = $('.output');
+    var $output = $('.output');
     let result = 0;
     let firstNum;
-    let secondNum = 0;
-    let operands = [false, false];
+    let secondNum;
+    let operands = [false, false, false, false];
+    let equalsPressed = false;
 
 
     function checkOperands(){
@@ -15,39 +16,49 @@
         return !elem;
       });
     }
-    console.log(checkOperands());
+
 
     $('.box').on('click', clickHandler);
 
     function clickHandler(event){
+      // console.log(checkOperands());
 
       let input = event.target.innerHTML;
-
+      console.log(typeof input);
       //numbers controller
-      if (parseInt(input)){
+      if ('0' || parseInt(input)){
+        // bug here: variables get reset even if continuing to operate
+        // also problems with 0
+        if (equalsPressed){
+          result = 0;
+          $output.text(result);
+          firstNum = undefined;
+          secondNum = undefined;
+          equalsPressed = false;
+        }
 
-        let number = parseInt(input);
+        // let number = parseInt(input);
+        let number = input;
+        // result = parseInt(result);
 
         // if no operands active
         if (checkOperands()){
 
-          if (firstNum) {
-            console.log('firstNum', firstNum, 'result', result, 'number', number);
-            result = parseInt(result.toString() + number.toString());
+          console.log(input);
+          if ($output.text() !== '0') {
+            result = parseFloat(result.toString() + number.toString());
             firstNum = result;
           } else {
             firstNum = number;
             result = number;
-            console.log('firstNum', firstNum, 'result', result);
+            // console.log('firstNum', firstNum, 'result', result);
           }
 
 
         // if operands active
         } else {
-          // result = '';
-          // $output.text(result);
           if (secondNum) {
-            result = parseInt(result.toString() + number.toString());
+            result = parseFloat(result.toString() + number.toString());
             secondNum = result;
           } else {
             secondNum = number;
@@ -57,33 +68,105 @@
         }
       }
 
-        var operatorIndex = operands.indexOf(true);;
-        selectOperation(operatorIndex);
+      // equals key controller
+      if (input === "="){
+        if (checkOperands()){
+          //repeat last operation
+          console.log('here');
+        } else {
 
-
-      function equalsKey(){
-
+          var operatorIndex = operands.indexOf(true);;
+          selectOperation(operatorIndex);
+          console.log('result', result);
+          equalsPressed = true;
+        }
       }
+
+      // addition, multiplication, subtraction, division
       function selectOperation(i){
         if (i === 0){
           result = firstNum + secondNum;
-          firstNum = result;
+          // $output.text(result);
           operands[0] = false;
+        } else if (i === 1){
+          result = firstNum - secondNum;
+          // firstNum = result;
+          operands[1] = false;
+        } else if (i === 2) {
+          result = firstNum * secondNum;
+          // firstNum = result;
+          operands[2] = false;
+        } else if (i === 3) {
+          result = firstNum / secondNum;
+          // firstNum = result;
+          operands[3] = false;
         }
       }
 
-      // + operator controller
-      if (input === '+'){
-        if (checkOperands()){
-          operands[0] = true;
-          console.log(input);
+      if (checkOperands()){
+
+        switch(input){
+          case '+':
+            operands[0] = true;
+            // secondNum = undefined;
+            firstNum = result;
+            break;
+          case '-':
+            operands[1] = true;
+            // secondNum = undefined;
+            firstNum = result;
+            break;
+          case 'x':
+            operands[2] = true;
+            // secondNum = undefined;
+            firstNum = result;
+            break;
+          case '÷':
+            operands[3] = true;
+            // secondNum = undefined;
+            firstNum = result;
+            break;
+        }
+
+
+
+      }
+
+      // decimal point controller
+      if (input === '.'){
+        result = $output.text() + ".";
+        // change the data state to clicked so can't click again
+      }
+
+      if (input === '+/-'){
+        result = $output.text() * -1;
+        if (firstNum){
+          firstNum *= -1;
         } else {
-          // result += secondNum;
+          secondNum *= -1;
         }
       }
+
+      if (input === '%'){
+        result = $output.text() * 0.01;
+      }
+
+      // clear controller
+      if (input === 'AC'){
+        result = 0;
+        firstNum = undefined;
+        secondNum = undefined;
+      }
+
+
+
+
+
 
       $output.text(result);
+    console.log('result', result, 'firstNum', firstNum, 'secondNum', secondNum);
     }
+    $output.text(result);
 
 
   }
