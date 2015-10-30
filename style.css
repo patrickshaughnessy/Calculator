@@ -1,24 +1,37 @@
 .output {
   border: 1px solid black;
-  height: 10vw;
-  width: 79vw;
+  height: 13%;
+  width: 86%;
   text-align: right;
-  font-size: 9vw;
+  font-size: 150%;
+  padding-right: 4%;
+  background-color: gray;
+}
+
+.container {
+  height: 50vh;
+  width: 50vw;
 }
 
 .box {
   border: 1px solid black;
-  height: 19vw;
-  width: 19vw;
+  height: 19%;
+  width: 19%;
   display: inline-block;
   text-align: center;
-  font-size: 9vw;
-  padding-top: 7vw;
+  font-size: 200%;
+  padding-top: 4%;
+  margin: 1%;
 }
 
 .big {
-  border: 1px solid black;
-  height: 19vw;
-  width: 39vw;
-  display: inline-block;
+  width: 42%;
+}
+
+.operand {
+  background-color: orange;
+}
+
+.top {
+  background-color: lightgray;
 }
